@@ -19,6 +19,7 @@ netParams.addCellParams('Srule', cellRule)
 
 cellRule = {'conds':{'popLabel': 'M'}, 'secs':{}}
 cellRule['secs']['soma'] = {'geom':{}, 'mechs':{}}
+cellRule['secs']['dend'] = {'geom' : {}, 'topol':{}, 'mechs':{}}
 cellRule['secs']['soma']['mechs']['hh'] = {'gnabar': 0.13, 'gkbar': 0.0321, 'gl': 0.002, 'el':-65}
 cellRule['secs']['dend']['geom']= {'diam': 10, 'L': 15, 'Ra': 120.0, 'cm': 1}
 cellRule['secs']['dend']['mechs']['pas'] = {'g': 0.0000321, 'e': -70 }
