@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 01 15:23:08 2016
+
+@author: Ryoha
+"""
+
+from netpyne import specs,sim
+netParams = specs.NetParams()
+
+netParams.addPopParams('B',{'celltype': 'PYR', 'numCells': 5, 'cellModel':'Traub'})
+
+
+cellRule = netParams.importCellParams(label='PYR_Traub_rule', conds= {'cellType': 'PYR', 'cellModel': 'Traub'},
+        fileName='pyr3_traub.hoc', cellName='pyr3')
+somaSec = cellRule['secLists']['Soma'][0]
+cellRule['secs'][somaSec]['spikeGenLoc'] = 0.5
