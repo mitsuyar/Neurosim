@@ -6,12 +6,41 @@ Created on Thu Sep 01 15:23:08 2016
 """
 
 from netpyne import specs,sim
+
+
+
+
+
 netParams = specs.NetParams()
 
-netParams.addPopParams('B',{'celltype': 'PYR', 'numCells': 5, 'cellModel':'Traub'})
+netParams.addPopParams('B',{'celltype': 'PYR', 'numCells': 1, 'cellModel':'Traub'})
+netParams.addPopParams('C',{'celltype': 'PYR', 'numCells': 1, 'cellModel':'Traub'})
 
 
-cellRule = netParams.importCellParams(label='PYR_Traub_rule', conds= {'cellType': 'PYR', 'cellModel': 'Traub'},
-        fileName='pyr3_traub.hoc', cellName='pyr3')
+cellRule = netParams.importCellParams(label='PYR_Traub_rule', conds= {'cellType': 'PYR', 'cellModel': 'Traub'},fileName='pyr3_traub.hoc', cellName='pyr3')
 somaSec = cellRule['secLists']['Soma'][0]
 cellRule['secs'][somaSec]['spikeGenLoc'] = 0.5
+
+netParams.addSynMechParams('exc', {'mod': 'Exp2Syn', 'tau1': 0.1, 'tau2': 5.0, 'e': 0})
+
+netParams.addConnParams('Self',{'preConds': {'popLabel':'B'},'postConds': {'popLabel': 'C'}, 'delay': 5,'sec':'dend','loc':1.0,'synMech':'exc'})
+
+netParams.addStimSourceParams('Input_1',{'type': 'IClamp', 'delay': 10, 'dur': 10, 'amp': 10})
+netParams.addStimSourceParams('Input_2',{'type': 'IClamp', 'delay': 1, 'dur': 10, 'amp': 10})
+netParams.addStimTargetParams('Input_1 -> PYR', {'source':'Input_1', 'sec':'dend', 'loc': 1.0,'delay': 0, 'conds':{'popLabe;': 'B'}})
+netParams.addStimTargetParams('Input_2 -> PYR', {'source':'Input_2', 'sec':'dend', 'loc': 1.0,'delay': 0, 'conds':{'popLabel': 'B'}})
+
+simConfig = specs.SimConfig() 
+simConfig.duration = 70
+simConfig.dt = 0.025
+simConfig.verbose = False
+simConfig.recordTraces = {'V_Soma': {'sec':'soma', 'loc':0.5, 'var':'v', 'popLabel':'C'}}
+simConfig.recordStep = 0.1
+simConfig.filename = 'model_output'
+simConfig.savePickle = False
+
+simConfig.addAnalysis('plotRaster', True)
+simConfig.addAnalysis('plotTraces', {'include': [1]})
+simConfig.addAnalysis('plot2Dnet', True)
+
+sim.createSimulateAnalyze(netParams, simConfig)
