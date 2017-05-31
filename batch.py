@@ -25,9 +25,9 @@ def runBatch(b, label):
             'skip': True}
     b.run()
 
-createBatch({'sec':['soma', 'dend_5', 'apic_47'],'weight':[0.0009, 0.003, 0.0017],'loc':[0.5, 0.8, 0.3]})
+b = createBatch({'sec':['soma', 'dend_5', 'apic_47'],'weight':[0.0009, 0.003, 0.0017],'loc':[0.5, 0.8, 0.3]})
 
-runBatch(b,test)
+runBatch(b, "test")
 
 
 
