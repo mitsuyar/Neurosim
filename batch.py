@@ -10,7 +10,6 @@ from netpyne.batch import Batch
 
 
 def createBatch(params):
-    # Create Batch object
     b = Batch(netParamsFile='M1_cell.py')
     for k,v in params.iteritems():
         b.params.append({'label': k, 'values': v})
@@ -25,9 +24,9 @@ def runBatch(b, label):
             'skip': True}
     b.run()
 
-b = createBatch({'sec':['soma', 'dend_5', 'apic_47'],'weight':[0.0009, 0.003, 0.0017],'loc':[0.5, 0.8, 0.3]})
+b = createBatch({'sec':['soma', 'dend_5', 'apic_47'],'weight':[0.09, 0.03, 0.017],'loc':[0.1, 0.7, 0.2]})
 
-runBatch(b, "test")
+runBatch(b, "test2")
 
 
 
