@@ -12,17 +12,19 @@ from netpyne import specs
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 
-from __main__ import cfg  # import SimConfig object with params from parent module
+try:
+	from __main__ import cfg  # import SimConfig object with params from parent module
+except:
+	from cfg import cfg
 
-###############################################################################
-#
+#------------------------------------------------------------------------------#
 # M1 6-LAYER ynorm-BASED MODEL
 #
-###############################################################################
+#------------------------------------------------------------------------------
 
-###############################################################################
+#------------------------------------------------------------------------------
 # NETWORK PARAMETERS
-###############################################################################
+#------------------------------------------------------------------------------
 
 # General network parameters
 netParams.scale = 1 # Scale factor for number of cells
@@ -66,10 +68,6 @@ cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] 
 ## create list of populations, where each item contains a dict with the pop params
 netParams.popParams['PT5B'] =	{'cellModel':'HH_full', 'cellType':'PT', 'numCells':1}
 
-nbkg = 1
-for i in range(nbkg): # create multiple background inputs 
-	netParams.popParams['bgPT_'+str(i)] = {'cellModel': 'NetStim', 'noise': 0.0, 'rate': 100, 'start': 200, 'number': 1}
-
 
 # Synaptic mechanism parameters
 netParams.synMechParams['AMPA'] = {'mod':'MyExp2SynBB','tau1':0.05,'tau2':5.3,'e':0}
@@ -83,23 +81,13 @@ ESynMech = ['AMPA', 'NMDA']
 ISlowSynMech = ['GABAASlow','GABAB']
 IFastSynMech = ['GABAA']
 
-
 # Connectivity rules/params
 synWeightFraction = [0.9, 0.1]
 
-netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'}, 
-	                          'postConds': {'cellType': 'PT'},
-	                          'sec': cfg.sec,
-	                          'synMech': ['AMPA', 'NMDA'],
-	                          'weight': cfg.weight,
-	                          'loc': cfg.loc,
-	                          'delay': 'max(defaultDelay, normal(5,3))'}
 
-
-####################################################################################################
+#------------------------------------------------------------------------------
 ## Subcellular connectivity (synaptic distributions)
-####################################################################################################   		
-
+#------------------------------------------------------------------------------
 subcell = 0
 
 if subcell:
@@ -128,3 +116,44 @@ if subcell:
 		'density': {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}} 
 
 
+#------------------------------------------------------------------------------
+# NetStim inputs
+#------------------------------------------------------------------------------
+if cfg.addNetStim:
+
+    for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
+    	params = getattr(cfg, key, None)
+        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, weight, delay = \
+        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'weight', 'delay'] 
+
+        cfg.analysis['plotTraces']['include'].append((pop,0))
+
+        if not isinstance(secList, list):
+            secList = list(netParams.cellParams[cellRule]['secLists'][secList])
+
+        segs = []
+
+        if synMech == ESynMech:
+            wfrac = cfg.synWeightFractionEE
+        elif synMech == ISlowSynMech:
+            wfrac = cfg.synWeightFractionSOME
+        else:
+            wfrac = [1.0]
+
+        netParams.popParams[key] = {'cellModel': 'NetStim', 'numCells': numStims, 'rate': 1000.0/interval, 'noise': noise, 'start': start, 'number': number}
+        
+        netParams.connParams[key] = { 
+                    'preConds': {'pop': key}, 
+                    'postConds': {'pop': pop},
+                    'synMech': synMech,
+                    'weight': weight, 
+                    'synWeightFraction': wfrac,
+                    'delay': delay,
+                    'synsPerConn': 1,
+                    'sec': secList}
+        
+        netParams.subConnParams[key] = {
+                    'preConds': {'pop': key}, 
+                    'postConds': {'pop': pop},  
+                    'sec': secList, 
+                    'density': 'uniform'} 
