@@ -93,7 +93,7 @@ netParams.connParams['bg'] = {'preConds': {'cellModel': 'NetStim'},
 	                          'synMech': ['AMPA', 'NMDA'],
 	                          'weight': cfg.weight,
 	                          'loc': cfg.loc,
-	                          'delay': 'max(defaultDelay, gauss(5,3))'}
+	                          'delay': 'max(defaultDelay, normal(5,3))'}
 
 
 ####################################################################################################
