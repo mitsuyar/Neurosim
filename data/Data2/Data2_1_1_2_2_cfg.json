@@ -1,0 +1,103 @@
+{
+    "simConfig": {
+        "NetStimEPT": {
+            "allSegs": true, 
+            "cellRule": "PT_full", 
+            "delay": 0, 
+            "interval": 50.0, 
+            "loc": 0.9, 
+            "noise": 0.25, 
+            "numStims": 100, 
+            "number": 1, 
+            "pop": [
+                "PT5B"
+            ], 
+            "secList": "basal", 
+            "start": 300, 
+            "synMech": [
+                "AMPA", 
+                "NMDA"
+            ], 
+            "weight": 0.002
+        }, 
+        "addNetStim": 1, 
+        "addSynMechs": true, 
+        "analysis": {
+            "plotTraces": {
+                "include": [
+                    0
+                ], 
+                "saveFig": true, 
+                "showFig": false
+            }
+        }, 
+        "backupCfgFile": [], 
+        "cache_efficient": false, 
+        "checkErrors": false, 
+        "checkErrorsVerbose": false, 
+        "createNEURONObj": 1, 
+        "createPyStruct": 1, 
+        "cvode_active": false, 
+        "cvode_atol": 0.001, 
+        "dt": 0.05, 
+        "duration": 500.0, 
+        "filename": "model_output", 
+        "gatherOnlySimData": false, 
+        "hParams": {
+            "celsius": 34, 
+            "v_init": -65
+        }, 
+        "includeParamsLabel": true, 
+        "printPopAvgRates": false, 
+        "printRunTime": false, 
+        "recordCells": [], 
+        "recordStep": 0.1, 
+        "recordStim": false, 
+        "recordStims": false, 
+        "recordTraces": {
+            "V_soma": {
+                "loc": 0.5, 
+                "sec": "soma", 
+                "var": "v"
+            }
+        }, 
+        "saveCSV": false, 
+        "saveCellConns": true, 
+        "saveCellSecs": true, 
+        "saveDat": false, 
+        "saveDataInclude": [
+            "simData", 
+            "simConfig", 
+            "netParams"
+        ], 
+        "saveDpk": false, 
+        "saveFolder": "data/Data2", 
+        "saveHDF5": false, 
+        "saveJson": true, 
+        "saveMat": false, 
+        "savePickle": false, 
+        "saveTiming": false, 
+        "seeds": {
+            "conn": 1, 
+            "loc": 1, 
+            "stim": 1
+        }, 
+        "simLabel": "Data2_1_1_2_2", 
+        "synWeightFractionEE": [
+            1.0, 
+            0.1
+        ], 
+        "synWeightFractionEI": [
+            1.0, 
+            0.1
+        ], 
+        "synWeightFractionSOME": [
+            1.0, 
+            7.5
+        ], 
+        "timestampFilename": false, 
+        "timing": true, 
+        "tstop": 1000.0, 
+        "verbose": 0
+    }
+}

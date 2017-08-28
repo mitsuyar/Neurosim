@@ -1,0 +1,60 @@
+{
+    "batch": {
+        "batchLabel": "Data2", 
+        "cfgFile": "cfg.py", 
+        "method": "grid", 
+        "netParamsFile": "M1_cell.py", 
+        "params": [
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "numStims"
+                ], 
+                "values": [
+                    50, 
+                    100, 
+                    150
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "weight"
+                ], 
+                "values": [
+                    0.001, 
+                    0.002, 
+                    0.003
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "secList"
+                ], 
+                "values": [
+                    "alldend", 
+                    "apic", 
+                    "basal"
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "loc"
+                ], 
+                "values": [
+                    0.3, 
+                    0.6, 
+                    0.9
+                ]
+            }
+        ], 
+        "runCfg": {
+            "script": "init.py", 
+            "skip": true, 
+            "type": "mpi"
+        }, 
+        "saveFolder": "data/Data2"
+    }
+}
