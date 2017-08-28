@@ -1,0 +1,60 @@
+{
+    "batch": {
+        "batchLabel": "test4", 
+        "cfgFile": "cfg.py", 
+        "method": "grid", 
+        "netParamsFile": "M1_cell.py", 
+        "params": [
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "numStims"
+                ], 
+                "values": [
+                    50, 
+                    100, 
+                    150
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "weight"
+                ], 
+                "values": [
+                    0.1, 
+                    0.2, 
+                    0.3
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "secList"
+                ], 
+                "values": [
+                    "alldend", 
+                    "apic", 
+                    "basal"
+                ]
+            }, 
+            {
+                "label": [
+                    "NetStimEPT", 
+                    "loc"
+                ], 
+                "values": [
+                    0.3, 
+                    0.6, 
+                    0.9
+                ]
+            }
+        ], 
+        "runCfg": {
+            "script": "init.py", 
+            "skip": true, 
+            "type": "mpi"
+        }, 
+        "saveFolder": "data/test4"
+    }
+}
