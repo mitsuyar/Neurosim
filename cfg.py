@@ -41,9 +41,7 @@ cfg.gatherOnlySimData = False
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True, 'showFig': False} # plot recorded traces for this list of cells
 
 # batch parameters
-cfg.sec = 'Adend2'
-cfg.loc = 0.5
-cfg.weight = 0.04
+
 
 #------------------------------------------------------------------------------
 # Synapses
@@ -58,8 +56,8 @@ cfg.synWeightFractionSOME = [1.0, 7.5] # SOM -> E GABAASlow to GABAB ratio
 cfg.addNetStim = 1
 
 # netstim
-cfg.NetStimEPT = {'numStims': 100, 'pop': ['PT5B'], 'cellRule': 'PT_full', 'secList': 'alldend', 'allSegs': True, \
- 						'synMech': ['AMPA', 'NMDA'] , 'start': 300, 'interval': 1000/20.0, 'noise': 0.25, 'number': 1, 'weight': 0.005, 'delay': 0}
+cfg.NetStimEPT = {'numStims': 2,'pop': ['PT5B'], 'cellRule': 'PT_full', 'secList': 'alldend', 'allSegs': True, \
+ 						'synMech': ['AMPA', 'NMDA'] , 'start': 300, 'interval': 1000/20.0, 'noise': 0.25, 'number': 1, 'loc': 0.5, 'weight': 0.005, 'delay': 0}
 
 
 

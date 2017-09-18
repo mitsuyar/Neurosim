@@ -9,6 +9,7 @@ Contributors: salvadordura@gmail.com
 """
 
 from netpyne import specs
+from neuron import h,gui
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 
@@ -123,8 +124,8 @@ if cfg.addNetStim:
 
     for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
     	params = getattr(cfg, key, None)
-        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, weight, delay = \
-        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'weight', 'delay'] 
+        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
+        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
 
         cfg.analysis['plotTraces']['include'].append((pop,0))
 
@@ -132,6 +133,22 @@ if cfg.addNetStim:
             secList = list(netParams.cellParams[cellRule]['secLists'][secList])
 
         segs = []
+        
+        # new addition to M1 code from here
+        
+    excludeSecs = ['axon']
+
+    if not segs:
+        secs = []
+        locs = []
+        for secName,sec in netParams.cellParams[rule]['secs'].iteritems():
+            if secName not in excludeSegs:
+                nseg = sec['geom']['nseg']
+                for iseg in range(nseg):
+                secs.append(secName)
+                locs.append((iseg+1)*(1.0/(nseg+1)))
+        
+                
 
         if synMech == ESynMech:
             wfrac = cfg.synWeightFractionEE
@@ -150,7 +167,8 @@ if cfg.addNetStim:
                     'synWeightFraction': wfrac,
                     'delay': delay,
                     'synsPerConn': 1,
-                    'sec': secList}
+                    'sec': secList,
+                    'loc': loc}
         
         netParams.subConnParams[key] = {
                     'preConds': {'pop': key}, 

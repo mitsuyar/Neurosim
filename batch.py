@@ -24,9 +24,19 @@ def runBatch(b, label):
             'skip': True}
     b.run()
 
-b = createBatch({'sec':['soma', 'dend_5', 'apic_47'],'weight':[0.09, 0.03, 0.017],'loc':[0.1, 0.7, 0.2]})
+params = {}
 
-runBatch(b, "test2")
+params[('NetStimEPT', 'numStims')] = [50, 100, 150]
+params[('NetStimEPT', 'weight')] = [0.001, 0.002, 0.003]
+params[('NetStimEPT', 'secList')] = ['alldend', 'apic', 'basal']
+params[('NetStimEPT', 'loc')] = [0.3, 0.6, 0.9]
+
+
+b = createBatch(params)
+
+
+
+runBatch(b, "Data2")
 
 
 
