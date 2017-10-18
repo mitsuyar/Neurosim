@@ -11,11 +11,6 @@ import pickle
 
 netParams = specs.NetParams()   # object of class NetParams to store the network parameters
 
-try:
-	from __main__ import cfg  # import SimConfig object with params from parent module
-except:
-	from cfg import cfg
-
 ###############################################################################
 #
 # M1 6-LAYER ynorm-BASED MODEL
@@ -324,5 +319,50 @@ netParams.subConnParams['IT2->PT'] = {
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
 	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+
+#------------------------------------------------------------------------------
+# NetStim inputs
+#------------------------------------------------------------------------------
+if cfg.addNetStim:
+    
+    for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
+        params = getattr(cfg, key, None)
+        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
+        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
+        
+        cfg.analysis['plotTraces']['include'].append((pop,0))
+        
+        if not isinstance(secList, list):
+            secList = list(netParams.cellParams[cellRule]['secLists'][secList])
+        
+        segs = []
+
+
+
+        if synMech == ESynMech:
+            wfrac = cfg.synWeightFractionEE
+        elif synMech == ISlowSynMech:
+            wfrac = cfg.synWeightFractionSOME
+        else:
+            wfrac = [1.0]
+        
+        netParams.popParams[key] = {'cellModel': 'NetStim', 'numCells': numStims, 'rate': 1000.0/interval, 'noise': noise, 'start': start, 'number': number}
+        
+        netParams.connParams[key] = {
+                    'preConds': {'pop': key},
+                    'postConds': {'pop': pop},
+                    'synMech': synMech,
+                    'weight': weight,
+                    'synWeightFraction': wfrac,
+                    'delay': delay,
+                    'synsPerConn': 1,
+                    'sec': secList,
+                    'loc': loc}
+        
+        netParams.subConnParams[key] = {
+                    'preConds': {'pop': key},
+                    'postConds': {'pop': pop},
+                    'sec': secList,
+                    'density': 'uniform'}
 
 
