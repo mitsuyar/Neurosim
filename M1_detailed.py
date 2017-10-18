@@ -7,9 +7,15 @@ Contributors: salvadordura@gmail.com
 """
 
 from netpyne import specs
+from neuron import h,gui
 import pickle
 
-netParams = specs.NetParams()   # object of class NetParams to store the network parameters
+netParams = specs.NetParams()# object of class NetParams to store the network parameters
+
+try:
+    from __main__ import cfg  # import SimConfig object with params from parent module
+except:
+    from cfg import cfg
 
 ###############################################################################
 #
