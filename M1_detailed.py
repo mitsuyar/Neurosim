@@ -324,13 +324,12 @@ netParams.subConnParams['IT2->PT'] = {
 	'postConds': {'popLabel': 'PT5B'},  
 	'sec': 'spiny',
 	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY} 
+	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY}}
 
 #------------------------------------------------------------------------------
 # NetStim inputs
 #------------------------------------------------------------------------------
 if cfg.addNetStim:
-    
     for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
         params = getattr(cfg, key, None)
         numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
@@ -342,8 +341,6 @@ if cfg.addNetStim:
             secList = list(netParams.cellParams[cellRule]['secLists'][secList])
         
         segs = []
-
-
 
         if synMech == ESynMech:
             wfrac = cfg.synWeightFractionEE
@@ -370,5 +367,3 @@ if cfg.addNetStim:
                     'postConds': {'pop': pop},
                     'sec': secList,
                     'density': 'uniform'}
-
-
