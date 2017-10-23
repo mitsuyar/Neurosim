@@ -124,17 +124,6 @@ EtoPTweightFactor = 0.2
 netParams.ItoIweight = 0.1
 
 addBackground = 1
-addEtoE = 1
-addEtoI = 1
-addItoEI = 1
-
-with open('../data/conn.pkl', 'r') as fileObj:
-    connData = pickle.load(fileObj)
-
-smat = connData['smat']
-pmat = connData['pmat']
-wmat = connData['wmat']
-bins = connData['bins']
 
 ####################################################################################################
 ## Background inputs
@@ -171,160 +160,35 @@ if addBackground:
 	                                      'loc': 0.5,
 	                                      'delay': 'max(defaultDelay, gauss(5,3))'})  
 
-####################################################################################################
-## Exc -> Exc
-####################################################################################################
-
-if addEtoE:
-	labelsConns = [('W+AS_norm', 'IT', 'L2/3'), ('W+AS_norm', 'IT', 'L4,5A,5B'), ('W+AS_norm', 'PT', 'L5B'), ('W+AS_norm', 'IT,CT', 'L6')]
-	labelPostBins = [('W+AS', 'IT', 'L2/3'), ('W+AS', 'IT', 'L4,5A,5B'), ('W+AS', 'PT', 'L5B'), ('W+AS', 'IT,CT', 'L6')]
-	labelPreBins = ['W', 'AS', 'AS', 'W']
-	preTypes = ['IT', 'PT', 'CT']
-	postTypes = ['IT', 'IT', 'PT', ['IT,CT']]
-	ESynMech = ['AMPA','NMDA']
-
-	for i,(label, preBinLabel, postBinLabel) in enumerate(zip(labelsConns,labelPreBins, labelPostBins)):
-		for ipre, preBin in enumerate(bins[preBinLabel]):
-			for ipost, postBin in enumerate(bins[postBinLabel]):
-				netParams.addConnParams(params={'preConds': {'cellType': preTypes, 'ynorm': preBin},
-												'postConds': {'cellType': postTypes[i], 'ynorm': postBin},
-												'synMech': ESynMech,
-												'probability': pmat[label][ipost,ipre],
-												'weight': wmat[label][ipost,ipre],
-												'synWeightFraction': synWeightFraction,
-												'delay': 'defaultDelay+dist_3D/propVelocity'})
-
-####################################################################################################
-## Exc -> Inh
-####################################################################################################
-
-if addEtoI:
-	labelsConns = ['FS', 'LTS']
-	labelPostBins = ['FS/LTS', 'FS/LTS']
-	labelPreBins = ['FS/LTS', 'FS/LTS']
-	preTypes = ['IT', 'PT', 'CT']
-	postTypes = ['PV', 'SOM']
-	ESynMech = ['AMPA','NMDA']
-
-	for i,(label, preBinLabel, postBinLabel) in enumerate(zip(labelsConns,labelPreBins, labelPostBins)):
-		for ipre, preBin in enumerate(bins[preBinLabel]):
-			for ipost, postBin in enumerate(bins[postBinLabel]):
-				netParams.addConnParams(params={'preConds': {'cellType': preTypes, 'ynorm': preBin},
-												'postConds': {'cellType': postTypes[i], 'ynorm': postBin},
-												'synMech': ESynMech,
-												'probability': pmat[label][ipost,ipre],
-												'weight': wmat[label][ipost,ipre],
-												'synWeightFraction': synWeightFraction,
-												'delay': 'defaultDelay+dist_3D/propVelocity'})
-
-
-###################################################################################################
-# Inh -> All
-###################################################################################################
-
-if addItoI:
-	labelsConns = ['FS', 'LTS']
-	labelPostBins = ['FS/LTS', 'FS/LTS']
-	labelPreBins = ['FS/LTS', 'FS/LTS']
-	preTypes = ['IT', 'PT', 'CT']
-	postTypes = ['PV', 'SOM']
-	ESynMech = ['AMPA','NMDA']
-
-	for i,(label, preBinLabel, postBinLabel) in enumerate(zip(labelsConns,labelPreBins, labelPostBins)):
-		for ipre, preBin in enumerate(bins[preBinLabel]):
-			for ipost, postBin in enumerate(bins[postBinLabel]):
-				netParams.addConnParams(params={'preConds': {'cellType': preTypes, 'ynorm': preBin},
-												'postConds': {'cellType': postTypes[i], 'ynorm': postBin},
-												'synMech': ESynMech,
-												'probability': pmat[label][ipost,ipre],
-												'weight': wmat[label][ipost,ipre],
-												'synWeightFraction': synWeightFraction,
-												'delay': 'defaultDelay+dist_3D/propVelocity'})
-
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'SOM_L23'},
-'postConds': {'ynorm': [0.12,0.31]},
-'synMech': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'SOM_L5'},
-'postConds': {'ynorm': [0.31,0.77]},
-'synMech': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'SOM_L6'},
-'postConds': {'ynorm': [0.77,1.0]},
-'synMech': 'GABAB',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'PV_L23'},
-'postConds': {'ynorm': [0.12,0.31]},
-'synMech': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'PV_L5'},
-'postConds': {'ynorm': [0.31,0.77]},
-'synMech': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-netParams.addConnParams(params={'preConds': {'popLabel': 'PV_L6'},
-'postConds': {'ynorm': [0.77,1.0]},
-'synMech': 'GABAA',
-'probability': '1.0 * exp(-dist_3D/probLambda)',
-'weight': 'ItoIweight',
-'delay': 'defaultDelay+dist_3D/propVelocity',
-'synsPerConn': 5,
-'sec': 'alldend'})
-
-
 
 
 ####################################################################################################
 ## Subcellular connectivity (synaptic distributions)
 ####################################################################################################   		
 
-# load 2d density maps
-import numpy
-lenX = 10
-lenY = 30
-somaY = -735
-spacing = 50
-maxRatio = 15
-file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
-data2d = numpy.loadtxt(file2d)
-map2d = [[None for _ in range(lenY)] for _ in range(lenX)] 
-for ii in range(lenX): 
-	for jj in range(lenY):
-		map2d[ii][jj] = data2d[ii*30+jj]
-gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
-gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+# # load 2d density maps
+# import numpy
+# lenX = 10
+# lenY = 30
+# somaY = -735
+# spacing = 50
+# maxRatio = 15
+# file2d = 'density_scracm18_BS0284_memb_BS0477_morph.dat'
+# data2d = numpy.loadtxt(file2d)
+# map2d = [[None for _ in range(lenY)] for _ in range(lenX)] 
+# for ii in range(lenX): 
+# 	for jj in range(lenY):
+# 		map2d[ii][jj] = data2d[ii*30+jj]
+# gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
+# gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
 
-netParams.subConnParams['IT2->PT'] = {
-	'preConds': {'popLabel': ['IT2']}, 
-	'postConds': {'popLabel': 'PT5B'},  
-	'sec': 'spiny',
-	'groupSynMechs': ['AMPA', 'NMDA'], 
-	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY}}
+# netParams.subConnParams['IT2->PT'] = {
+# 	'preConds': {'popLabel': ['IT2']}, 
+# 	'postConds': {'popLabel': 'PT5B'},  
+# 	'sec': 'spiny',
+# 	'groupSynMechs': ['AMPA', 'NMDA'], 
+# 	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY}}
+
 
 #------------------------------------------------------------------------------
 # NetStim inputs
