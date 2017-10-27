@@ -47,7 +47,7 @@ SimpSecD = {}
 SimpSecD['alldend'] = ['Adend2'] # ['Adend1', 'Adend2', 'Adend3', 'Bdend']
 SimpSecD['apicdend'] = ['Adend1', 'Adend2', 'Adend3']
 SimpSecD['perisom'] = ['soma']
-
+"""
 ## IT cell params (full)
 cellRule = netParams.importCellParams(label='IT_full', conds={'cellType': 'IT', 'cellModel': 'HH_full'},
   fileName='cells/ITcell.hoc', cellName='ITcell', cellArgs = [0, 0,0])
@@ -58,7 +58,7 @@ cellRule = netParams.importCellParams(label='IT_6comp',conds={'cellType': 'IT', 
   fileName='cells/CSTR6.py', cellName='CSTR6')
 for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -75.0413649414 
 for k in ['alldend', 'apicdend','perisom']: cellRule['secLists'][k] = SimpSecD[k]
-
+"""
 ## PT cell params (6-comp)
 cellRule = netParams.importCellParams(label='PT_6comp',conds={'cellType': 'PT', 'cellModel': 'HH_reduced'},
   fileName='cells/SPI6.py', cellName='SPI6')
@@ -74,7 +74,7 @@ cellRule['secLists']['perisom'].extend([sec for sec in cellRule.secs if 'dend' i
 cellRule['secLists']['alldend'] = [sec for sec in cellRule.secs if ('dend' in sec or 'apic' in sec)] # basal+apical
 cellRule['secLists']['apicdend'] = [sec for sec in cellRule.secs if ('apic' in sec)] # basal+apical
 cellRule['secLists']['spiny'] = [sec for sec in cellRule['secLists']['alldend'] if sec not in ['apic_0', 'apic_1']]
-
+"""
 ## CT cell params (6-comp)
 cellRule = netParams.importCellParams(label='CT_6comp',conds={'cellType': 'CT', 'cellModel': 'HH_reduced'},
   fileName='cells/CSTR6.py', cellName='CSTR6')
@@ -89,21 +89,21 @@ cellRule = netParams.importCellParams(label='SOM', conds={'cellType': 'SOM','cel
 cellRule = netParams.importCellParams(label='PV', conds={'cellType':'PV','cellModel':'HH_reduced'}, 
   fileName='cells/BAS1.py', cellName='BAS1', cellArgs=[0,0,0,0,0])
 
-
+"""
 ## create list of populations, where each item contains a dict with the pop params
-netParams.addPopParams('CT_L6',		{'cellModel':'HH_reduced',	'cellType':'CT',	'ynormRange':[0.77,1.0],	'density':40e3})
-netParams.addPopParams('IT_L6',		{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.77,1.0],	'density':40e3})
-netParams.addPopParams('SOM_L6',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.77,1.0],	'density':10e3})
-netParams.addPopParams('PV_L6',		{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.77,1.0],	'density':10e3})
-netParams.addPopParams('PT_L5B',	{'cellModel':'HH_full',		'cellType':'PT',	'ynormRange':[0.52,0.77],	'density':40e3})
-netParams.addPopParams('IT_L5B',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.52,0.77],	'density':40e3})
-netParams.addPopParams('IT_L5A',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.41,0.52],	'density':80e3})
-netParams.addPopParams('SOM_L5',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.31,0.77],	'density':10e3}) 
-netParams.addPopParams('PV_L5',		{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.31,0.77],	'density':10e3})
-netParams.addPopParams('IT_L4',		{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.31, 0.41],	'density':80e3})
-netParams.addPopParams('IT_L23',	{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.12, 0.31],	'density':80e3})
-netParams.addPopParams('SOM_L23',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.12,0.31],	'density':10e3})
-netParams.addPopParams('PV_L23',	{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.12,0.31],	'density':10e3})
+#netParams.addPopParams('CT_L6',		{'cellModel':'HH_reduced',	'cellType':'CT',	'ynormRange':[0.77,1.0],	'density':40e3})
+#netParams.addPopParams('IT_L6',		{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.77,1.0],	'density':40e3})
+#netParams.addPopParams('SOM_L6',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.77,1.0],	'density':10e3})
+#netParams.addPopParams('PV_L6',		{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.77,1.0],	'density':10e3})
+netParams.addPopParams('PT_L5B',	{'cellModel':'HH_full',	 'cellType':'PT', 'numcells':1,	'ynormRange':[0.52,0.77],	'density':40e3})
+#netParams.addPopParams('IT_L5B',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.52,0.77],	'density':40e3})
+#netParams.addPopParams('IT_L5A',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.41,0.52],	'density':80e3})
+#netParams.addPopParams('SOM_L5',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.31,0.77],	'density':10e3})
+#netParams.addPopParams('PV_L5',		{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.31,0.77],	'density':10e3})
+#netParams.addPopParams('IT_L4',		{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.31, 0.41],	'density':80e3})
+#netParams.addPopParams('IT_L23',	{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.12, 0.31],	'density':80e3})
+#netParams.addPopParams('SOM_L23',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.12,0.31],	'density':10e3})
+#netParams.addPopParams('PV_L23',	{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.12,0.31],	'density':10e3})
 
 # Synaptic mechanism parameters
 netParams.addSynMechParams('AMPA', {'mod':'MyExp2SynBB','tau1':0.05,'tau2':5.3,'e':0})
@@ -128,14 +128,14 @@ addBackground = 1
 ####################################################################################################
 ## Background inputs
 ####################################################################################################
-
+"""
 if addBackground:
 	# Create populations of NetStims
 	bgNoise = 0.5
 	bgRates = {'CT': 10, 'IT': 10, 'PT': 10, 'PV': 10, 'SOM': 10}
  	for postType in ['CT', 'IT', 'PT', 'PV', 'SOM']:
 	    bgPopParams = {'cellModel': 'NetStim', 'noise': bgNoise, 'rate': bgRates[postType], 'start':0}
-	    netParams.addPopParams('bg'+postType, bgPopParams)
+        netParams.addPopParams('bg'+postType, bgPopParams)
 
 	# Created conn rules between bg->E
 	bgWeightsE = {'CT': 0.1, 'IT': 0.1, 'PT': 0.1, 'PV': 0.1, 'COM': 0.1}
@@ -148,8 +148,10 @@ if addBackground:
 	                                      'synMech': mech,
 	                                      'weight': wt,
 	                                      'loc': 0.5,
-	                                      'delay': 'max(defaultDelay, gauss(5,3))'})  
-    
+	                                      'delay': 'max(defaultDelay, gauss(5,3))'})
+                                          
+"""
+"""
     # Created conn rules between bg->I
   	for poty in ['PV', 'SOM']: # postsynaptic I cells
   		for mech,sec,wt in zip(['AMPA','GABAA'], ['alldend','perisom'], [bgWeightsE[postType], bgWeightsI[postType]]):
@@ -160,7 +162,7 @@ if addBackground:
 	                                      'loc': 0.5,
 	                                      'delay': 'max(defaultDelay, gauss(5,3))'})  
 
-
+"""
 
 ####################################################################################################
 ## Subcellular connectivity (synaptic distributions)
@@ -189,15 +191,44 @@ if addBackground:
 # 	'groupSynMechs': ['AMPA', 'NMDA'], 
 # 	'density': {'type': '2Dmap', 'gridX': gridX, 'gridY': gridY, 'gridValues': map2d, 'somaY': somaY}}
 
+#Added from M1_cell
+"""
+subcell = 0
 
+if subcell:
+    # load 1d and 2d density maps
+    import numpy
+    lenX = 10
+    lenY = 30
+    maxRatio = 15
+    
+    file1d = 'radial_scracm18_BS0284_memb_BS0477_morph.dat'
+    data1d = numpy.loadtxt(file1d)
+    map1d = []
+    for jj in range(lenY):
+            map1d.append(data1d[jj])
+        
+    fixedSomaY =-735
+    spacing = 50
+    gridX = range(-spacing*lenX/2, spacing*lenX/2, spacing)
+    gridY = range(0, -spacing*lenY, -spacing) # NEURON's axis for cortical depth goes from 0 (pia) to -cfg.sizeY (WM)
+        
+    netParams.subConnParams['bg->PT'] = {
+            'preConds': {'cellModel': 'NetStim'},
+            'postConds': {'popLabel': 'PT5B', 'cellModel': 'HH_full'},
+            'sec': 'spiny',
+            'groupSynMechs': ['AMPA', 'NMDA'],
+            'density': {'type': '1Dmap', 'gridX': None, 'gridY': gridY, 'gridValues': map1d, 'fixedSomaY': fixedSomaY}}
+"""
 #------------------------------------------------------------------------------
 # NetStim inputs
 #------------------------------------------------------------------------------
+
 if cfg.addNetStim:
     for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
         params = getattr(cfg, key, None)
-        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
-        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
+        numStims, pop, cellRule, sec, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
+        [params[s] for s in 'numStims', 'pop', 'cellRule', 'sec', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
         
         cfg.analysis['plotTraces']['include'].append((pop,0))
         
@@ -223,11 +254,12 @@ if cfg.addNetStim:
                     'synWeightFraction': wfrac,
                     'delay': delay,
                     'synsPerConn': 1,
-                    'sec': secList,
+                    'sec': sec,
                     'loc': loc}
         
         netParams.subConnParams[key] = {
                     'preConds': {'pop': key},
                     'postConds': {'pop': pop},
-                    'sec': secList,
+                    'sec': sec,
                     'density': 'uniform'}
+

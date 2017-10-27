@@ -50,13 +50,14 @@ cfg.synWeightFractionEE = [1.0, 0.1] # E->E AMPA to NMDA ratio
 cfg.synWeightFractionEI = [1.0, 0.1] # E->I AMPA to NMDA ratio
 cfg.synWeightFractionSOME = [1.0, 7.5] # SOM -> E GABAASlow to GABAB ratio
 
-#------------------------------------------------------------------------------
+#---------------#---------------------------------------------------------------
 # NetStim inputs 
 #------------------------------------------------------------------------------
 cfg.addNetStim = 1
 
-# netstim
-cfg.NetStimEPT = {'numStims': 2,'pop': ['PT5B'], 'cellRule': 'PT_full', 'secList': 'alldend', 'allSegs': True, \
+# netstim #cfg.NetStimEPT
+
+cfg.NetStim1 = {'numStims': 1,'pop': ['PT_L5B'], 'cellRule': 'PT_full', 'secList': 'alldend', 'allSegs': True, \
  						'synMech': ['AMPA', 'NMDA'] , 'start': 300, 'interval': 1000/20.0, 'noise': 0.25, 'number': 1, 'loc': 0.5, 'weight': 0.005, 'delay': 0}
 
 
