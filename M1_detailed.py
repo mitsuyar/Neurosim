@@ -228,7 +228,7 @@ if cfg.addNetStim:
     for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
         params = getattr(cfg, key, None)
         numStims, pop, cellRule, sec, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
-        [params[s] for s in 'numStims', 'pop', 'cellRule', 'sec', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
+        [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
         
         cfg.analysis['plotTraces']['include'].append((pop,0))
         
@@ -260,6 +260,6 @@ if cfg.addNetStim:
         netParams.subConnParams[key] = {
                     'preConds': {'pop': key},
                     'postConds': {'pop': pop},
-                    'sec': sec,
+                    'sec': secList,
                     'density': 'uniform'}
 

@@ -6,7 +6,7 @@ Batch simulation for M1 model using NetPyNE
 Contributors: salvadordura@gmail.com
 """
 from netpyne.batch import Batch
-
+import numpy as np
 
 
 def createBatch(params):
@@ -47,8 +47,8 @@ params={}
 def weightNormE(pops=['PT_L5B'],
                 segs = None, allSegs = True, rule = 'PT_full', weights=list(np.arange(0.01, 0.2, 0.01)/100.0)):
     # Add params
-    from cfg_cell import cfg
-    from netParams_cell import netParams
+    from cfg import cfg
+    from M1_detailed import netParams
     excludeSegs = ['axon']
     if not segs:
         secs = []
@@ -66,7 +66,7 @@ def weightNormE(pops=['PT_L5B'],
 
 
     params[('NetStim1', 'pop')] = pops
-    params[('NetStim1', 'sec')] = secs
+    params[('NetStim1', 'secList')] = secs
     params[('NetStim1', 'loc')] = locs
     params[('NetStim1', 'weight')] = weights
     params[('NetStim1', 'numStims')] = 1
