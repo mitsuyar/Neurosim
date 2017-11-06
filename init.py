@@ -15,8 +15,8 @@ Contributors: salvadordura@gmail.com
 
 from netpyne import sim
 from neuron import h,gui
-cfg, _ = sim.readCmdLineArgs()
-sim.readCmdLineArgs(netParamsDefault=‘M1_detailed.py’)  #M1_cell originally, test change rn
+cfg, netParams = sim.readCmdLineArgs(simConfigDefault= 'cfg.py', netParamsDefault= 'M1_detailed.py')
+from M1_detailed import netParams  #M1_cell originally, test change rn
 
 
 sim.initialize(
