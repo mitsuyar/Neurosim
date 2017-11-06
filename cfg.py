@@ -39,7 +39,7 @@ cfg.gatherOnlySimData = False
 # Analysis and plotting
 #cfg.addAnalysis('plotRaster', True) # Whether or not to plot a raster
 cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True, 'showFig': False} # plot recorded traces for this list of cells
-
+#THIS NEEDS UPDATING
 # batch parameters
 
 
@@ -57,8 +57,8 @@ cfg.addNetStim = 1
 
 # netstim #cfg.NetStimEPT
 
-cfg.NetStim1 = {'numStims': 1,'pop': ['PT_L5B'], 'cellRule': 'PT_full', 'secList': 'alldend', 'allSegs': True, \
- 						'synMech': ['AMPA', 'NMDA'] , 'start': 300, 'interval': 1000/20.0, 'noise': 0.25, 'number': 1, 'loc': 0.5, 'weight': 0.005, 'delay': 0}
+cfg.NetStim1 = {'numStims': 1,'pop': ['PT_L5B'], 'cellRule': 'PT_full', 'secList': 'dend_16', 'allSegs': True, \
+ 						'synMech': ['AMPA', 'NMDA'] , 'start': 300, 'interval': 1000/20.0, 'noise': 0.25, 'number': 1, 'loc': 0.5, 'weight': 0.01, 'delay': 0}
 
 
 

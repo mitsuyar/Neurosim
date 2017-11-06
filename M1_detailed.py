@@ -59,12 +59,12 @@ cellRule = netParams.importCellParams(label='IT_6comp',conds={'cellType': 'IT', 
 for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -75.0413649414 
 for k in ['alldend', 'apicdend','perisom']: cellRule['secLists'][k] = SimpSecD[k]
 """
-## PT cell params (6-comp)
+"""## PT cell params (6-comp)
 cellRule = netParams.importCellParams(label='PT_6comp',conds={'cellType': 'PT', 'cellModel': 'HH_reduced'},
   fileName='cells/SPI6.py', cellName='SPI6')
 for secName,sec in cellRule['secs'].iteritems(): sec['vinit'] = -75.0413649414 
 for k in ['alldend', 'apicdend','perisom']: cellRule['secLists'][k] = SimpSecD[k]
-
+"""
 ## PT cell params (full)
 cellRule = netParams.importCellParams(label='PT_full',conds={'cellType': 'PT', 'cellModel': 'HH_full'},
   fileName='cells/PTcell.hoc', cellName='PTcell', cellArgs = [0, 0,0])
@@ -95,7 +95,7 @@ cellRule = netParams.importCellParams(label='PV', conds={'cellType':'PV','cellMo
 #netParams.addPopParams('IT_L6',		{'cellModel':'HH_reduced',	'cellType':'IT',	'ynormRange':[0.77,1.0],	'density':40e3})
 #netParams.addPopParams('SOM_L6',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.77,1.0],	'density':10e3})
 #netParams.addPopParams('PV_L6',		{'cellModel':'HH_reduced',	'cellType':'PV',	'ynormRange':[0.77,1.0],	'density':10e3})
-netParams.addPopParams('PT_L5B',	{'cellModel':'HH_full',	 'cellType':'PT', 'numcells':1,	'ynormRange':[0.52,0.77],	'density':40e3})
+netParams.addPopParams('PT_L5B',	{'cellModel':'HH_full',	 'cellType':'PT', 'numCells':1,	'ynormRange':[0.52,0.77]})
 #netParams.addPopParams('IT_L5B',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.52,0.77],	'density':40e3})
 #netParams.addPopParams('IT_L5A',	{'cellModel':'HH_full',		'cellType':'IT',	'ynormRange':[0.41,0.52],	'density':80e3})
 #netParams.addPopParams('SOM_L5',	{'cellModel':'HH_reduced',	'cellType':'SOM',	'ynormRange':[0.31,0.77],	'density':10e3})
@@ -227,7 +227,7 @@ if subcell:
 if cfg.addNetStim:
     for key in [k for k in dir(cfg) if k.startswith('NetStim')]:
         params = getattr(cfg, key, None)
-        numStims, pop, cellRule, sec, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
+        numStims, pop, cellRule, secList, allSegs, synMech, start, interval, noise, number, loc, weight, delay = \
         [params[s] for s in 'numStims', 'pop', 'cellRule', 'secList', 'allSegs', 'synMech', 'start', 'interval', 'noise', 'number', 'loc', 'weight', 'delay']
         
         cfg.analysis['plotTraces']['include'].append((pop,0))
@@ -254,7 +254,7 @@ if cfg.addNetStim:
                     'synWeightFraction': wfrac,
                     'delay': delay,
                     'synsPerConn': 1,
-                    'sec': sec,
+                    'sec': secList,
                     'loc': loc}
         
         netParams.subConnParams[key] = {

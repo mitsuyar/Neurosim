@@ -34,6 +34,6 @@ sim.analysis.plotData()               # plot spike raster
 
 c=sim.net.cells
 pt=next(cell for cell in c if cell.tags['cellType']=='PT')
-fig=sim.analysis.plotShape(include = ['PT_L5B'], style = 'O', siz=5)
+fig=sim.analysis.plotShape(includePost = ['PT_L5B'], synStyle = 'O', synSiz=5)
 
 
