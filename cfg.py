@@ -38,7 +38,7 @@ cfg.gatherOnlySimData = False
 
 # Analysis and plotting
 #cfg.addAnalysis('plotRaster', True) # Whether or not to plot a raster
-cfg.analysis['plotTraces'] = {'include': [0], 'saveFig': True, 'showFig': False} # plot recorded traces for this list of cells
+cfg.analysis['plotTraces'] = {'include': [('PT_L5B',0)], 'saveFig': True, 'showFig': False} # plot recorded traces for this list of cells
 #THIS NEEDS UPDATING
 # batch parameters
 

@@ -80,10 +80,10 @@ def runBatch(b, label):
 secs = []
 locs = []
 pops=['PT_L5B']
-weights = [0.01]
+weights = [0.1]
 
 def weightNormE(pops=['PT_L5B'],
-                segs = None, allSegs = True, rule = 'PT_full', weights= [0.01]):
+                segs = None, allSegs = True, rule = 'PT_full', weights= [0.1]):
     # Add params
     from cfg import cfg
     from M1_detailed import netParams
@@ -103,14 +103,14 @@ def weightNormE(pops=['PT_L5B'],
 
 
 weightNormE(pops= pops,
-                segs = None, allSegs = True, rule = 'PT_full', weights= [0.01])
+                segs = None, allSegs = True, rule = 'PT_full', weights=weights)
 
 params = specs.ODict()
 params[('NetStim1', 'pop')] = pops
-params[('NetStim1', 'sec')] = secs
+params[('NetStim1', 'secList')] = secs
 params[('NetStim1', 'loc')] = locs
 params[('NetStim1', 'weight')] = weights
-groupedParams = [('NetStim1', 'sec'), ('NetStim1', 'loc')]
+groupedParams = [('NetStim1', 'secList'), ('NetStim1', 'loc')]
 
 b = Batch(params=params, netParamsFile='M1_detailed.py', cfgFile='cfg.py',groupedParams=groupedParams)
 
@@ -123,7 +123,7 @@ b = Batch(params=params, netParamsFile='M1_detailed.py', cfgFile='cfg.py',groupe
 
 
 
-runBatch(b,"Data 4")
+runBatch(b,"Data_4")
 
 
 

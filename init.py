@@ -16,7 +16,7 @@ Contributors: salvadordura@gmail.com
 from netpyne import sim
 from neuron import h,gui
 cfg, netParams = sim.readCmdLineArgs(simConfigDefault= 'cfg.py', netParamsDefault= 'M1_detailed.py')
-from M1_detailed import netParams  #M1_cell originally, test change rn
+ #M1_cell originally, test change rn
 
 
 sim.initialize(
@@ -34,6 +34,6 @@ sim.analysis.plotData()               # plot spike raster
 
 c=sim.net.cells
 pt=next(cell for cell in c if cell.tags['cellType']=='PT')
-fig=sim.analysis.plotShape(includePost = ['PT_L5B'], synStyle = 'O', synSiz=5)
+
 
 

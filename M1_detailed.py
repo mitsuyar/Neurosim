@@ -232,8 +232,8 @@ if cfg.addNetStim:
         
         cfg.analysis['plotTraces']['include'].append((pop,0))
         
-        if not isinstance(secList, list):
-            secList = list(netParams.cellParams[cellRule]['secLists'][secList])
+        #if not isinstance(secList, list):
+        #secList = list(netParams.cellParams[cellRule]['secLists'][secList])
         
         segs = []
 
@@ -260,6 +260,6 @@ if cfg.addNetStim:
         netParams.subConnParams[key] = {
                     'preConds': {'pop': key},
                     'postConds': {'pop': pop},
-                    'sec': secList,
+                    'sec': sec,
                     'density': 'uniform'}
 
